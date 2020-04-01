@@ -50,7 +50,7 @@ int main( void )
 	const char * const pcMessageEnd = "FreeRTOS Demo end\r\n";
 
 	prvSetupHardware();
-	write( STDOUT_FILENO, pcMessage, strlen( pcMessage ) );
+	fputs(pcMessage, stdout);
 
 	/* At this point, you can create queue,semaphore, task requested for your application */
 
@@ -65,7 +65,7 @@ int main( void )
 	timer tasks to be created. 
 	or task have stoppped the Scheduler */
 
-	write( STDOUT_FILENO, pcMessageEnd, strlen( pcMessageEnd ) );
+	fputs(pcMessageEnd, stdout);
 
 }
 
@@ -80,7 +80,7 @@ static void prvSetupHardware( void )
 	led0_blue = metal_led_get_rgb("LD0", "blue");
 	if ((led0_red == NULL) || (led0_green == NULL) || (led0_blue == NULL))
 	{
-		write( STDOUT_FILENO, pcWarningMsg, strlen( pcWarningMsg ) );
+		fputs(pcWarningMsg, stdout);
 	}
 	else
 	{
@@ -146,8 +146,8 @@ void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
 	function is called if a stack overflow is detected. */
 	taskDISABLE_INTERRUPTS();
 
-	write( STDOUT_FILENO, "ERROR Stack overflow on func: ", 30 );
-	write( STDOUT_FILENO, pcTaskName, strlen( pcTaskName ) );
+	fputs( "ERROR Stack overflow on func: ", stdout );
+	fputs( pcTaskName, stdout );
 
 
 	if ( led0_red != NULL )
