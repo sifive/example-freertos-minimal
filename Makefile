@@ -103,6 +103,7 @@ $(PROGRAM): \
 	directories \
 	$(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(_ADD_LDFLAGS) $(OBJS) $(LOADLIBES) $(LDLIBS) -o $@
+	sh ./check-tls $@
 	@echo
 
 clean::
