@@ -18,16 +18,12 @@
 #include "queue.h"
 
 /* Freedom metal includes. */
-#include <metal/machine.h>
 #include <metal/machine/platform.h>
 
-#include <metal/lock.h>
 #include <metal/uart.h>
 #include <metal/interrupt.h>
 #include <metal/clock.h>
 #include <metal/led.h>
-
-extern struct metal_led *led0_red, *led0_green, *led0_blue;
 
 /*-----------------------------------------------------------*/
 /*
@@ -37,11 +33,8 @@ extern struct metal_led *led0_red, *led0_green, *led0_blue;
 static void prvSetupHardware( void );
 
 /*-----------------------------------------------------------*/
-struct metal_cpu *cpu0;
-struct metal_interrupt *cpu_intr, *tmr_intr;
-struct metal_led *led0_red, *led0_green, *led0_blue;
-
-#define LED_ERROR ((led0_red == NULL) || (led0_green == NULL) || (led0_blue == NULL))
+struct metal_cpu cpu0;
+struct metal_led led0_red, led0_green, led0_blue;
 
 /*-----------------------------------------------------------*/
 int main( void )
@@ -78,22 +71,15 @@ static void prvSetupHardware( void )
 	led0_red = metal_led_get_rgb("LD0", "red");
 	led0_green = metal_led_get_rgb("LD0", "green");
 	led0_blue = metal_led_get_rgb("LD0", "blue");
-	if ((led0_red == NULL) || (led0_green == NULL) || (led0_blue == NULL))
-	{
-		write( STDOUT_FILENO, pcWarningMsg, strlen( pcWarningMsg ) );
-	}
-	else
-	{
-		// Enable each LED
-		metal_led_enable(led0_red);
-		metal_led_enable(led0_green);
-		metal_led_enable(led0_blue);
+	// Enable each LED
+	metal_led_enable(led0_red);
+	metal_led_enable(led0_green);
+	metal_led_enable(led0_blue);
 
-		// All Off
-		metal_led_on(led0_red);
-		metal_led_on(led0_green);
-		metal_led_on(led0_blue);
-	}
+	// All Off
+	metal_led_on(led0_red);
+	metal_led_on(led0_green);
+	metal_led_on(led0_blue);
 }
 /*-----------------------------------------------------------*/
 
@@ -112,11 +98,8 @@ void vApplicationMallocFailedHook( void )
 	provide information on how the remaining heap might be fragmented). */
 	taskDISABLE_INTERRUPTS();
 
-	if ( led0_red != NULL )
-	{
-		// Red light on
-		metal_led_off(led0_red);
-	}
+	// Red light on
+	metal_led_off(led0_red);
 
 	_exit(1);
 }
@@ -149,12 +132,8 @@ void vApplicationStackOverflowHook( TaskHandle_t pxTask, char *pcTaskName )
 	write( STDOUT_FILENO, "ERROR Stack overflow on func: ", 30 );
 	write( STDOUT_FILENO, pcTaskName, strlen( pcTaskName ) );
 
-
-	if ( led0_red != NULL )
-	{
-		// Red light on
-		metal_led_off(led0_red);
-	}
+	// Red light on
+	metal_led_off(led0_red);
 
 	_exit(1);
 }
@@ -170,11 +149,8 @@ void vAssertCalled( void )
 {
 	taskDISABLE_INTERRUPTS();
 
-	if ( led0_red != NULL )
-	{
-		// Red light on
-		metal_led_off(led0_red);
-	}
+	// Red light on
+	metal_led_off(led0_red);
 
 	_exit(1);
 }
