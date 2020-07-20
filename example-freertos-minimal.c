@@ -34,7 +34,22 @@ static void prvSetupHardware( void );
 
 /*-----------------------------------------------------------*/
 struct metal_cpu cpu0;
-struct metal_led led0_red, led0_green, led0_blue;
+
+#ifdef metal_led_ld0red
+struct metal_led led0_red = metal_led_ld0red;
+#else
+struct metal_led led0_red = metal_led_none;
+#endif
+#ifdef metal_led_ld0blue
+struct metal_led led0_blue = metal_led_ld0blue;
+#else
+struct metal_led led0_blue = metal_led_none;
+#endif
+#ifdef metal_led_ld0green
+struct metal_led led0_green = metal_led_ld0green;
+#else
+struct metal_led led0_green = metal_led_none;
+#endif
 
 /*-----------------------------------------------------------*/
 int main( void )
@@ -68,9 +83,6 @@ static void prvSetupHardware( void )
 	const char * const pcWarningMsg = "At least one of LEDs is null.\n";
 
 	// This demo will toggle LEDs colors so we define them here
-	led0_red = metal_led_get_rgb("LD0", "red");
-	led0_green = metal_led_get_rgb("LD0", "green");
-	led0_blue = metal_led_get_rgb("LD0", "blue");
 	// Enable each LED
 	metal_led_enable(led0_red);
 	metal_led_enable(led0_green);
