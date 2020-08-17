@@ -6,7 +6,7 @@
 
 /* Freedom metal includes. */
 #include <metal/exception.h>
-#include <metal/machine/platform.h>
+#include <metal/platform.h>
 
 #include <stdio.h>
 #include <string.h>

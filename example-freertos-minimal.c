@@ -18,7 +18,7 @@
 #include "queue.h"
 
 /* Freedom metal includes. */
-#include <metal/machine/platform.h>
+#include <metal/platform.h>
 
 #include <metal/uart.h>
 #include <metal/interrupt.h>
