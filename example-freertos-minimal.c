@@ -36,19 +36,19 @@ static void prvSetupHardware( void );
 struct metal_cpu cpu0;
 
 #ifdef metal_led_ld0red
-struct metal_led led0_red = metal_led_ld0red;
+#define led0_red metal_led_ld0red
 #else
-struct metal_led led0_red = metal_led_none;
+#define led0_red metal_led_none
 #endif
 #ifdef metal_led_ld0blue
-struct metal_led led0_blue = metal_led_ld0blue;
+#define led0_blue metal_led_ld0blue
 #else
-struct metal_led led0_blue = metal_led_none;
+#define led0_blue metal_led_none
 #endif
 #ifdef metal_led_ld0green
-struct metal_led led0_green = metal_led_ld0green;
+#define led0_green metal_led_ld0green
 #else
-struct metal_led led0_green = metal_led_none;
+#define led0_green metal_led_none
 #endif
 
 /*-----------------------------------------------------------*/
